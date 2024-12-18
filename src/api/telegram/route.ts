@@ -27,6 +27,7 @@ async function runCors(req: Request, res: Response) {
 }
 
 export default async function handler(req: Request,res:Response) {
+  console.log("processing request", req)
     await runCors(req, res);
     const telegramSecretToken = req.headers.get('x-telegram-bot-api-secret-token');
     if (telegramSecretToken !== TELEGRAM_BOT_TOKEN) {
@@ -52,6 +53,7 @@ export default async function handler(req: Request,res:Response) {
       });
     }
   } else {
+    console.error("Method not allowd", req.method)
     return new Response(JSON.stringify({ message: 'Method Not Allowed' }), {
       status: 405,
       headers: { 'Content-Type': 'application/json' },
