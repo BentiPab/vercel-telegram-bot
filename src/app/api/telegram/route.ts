@@ -26,7 +26,7 @@ async function runCors(req: Request, res: Response) {
       });
 }
 
-export default async function handler(req: Request,res:Response) {
+export async function POST(req: Request, res: Response) {
   console.log("processing request", req)
     await runCors(req, res);
     const telegramSecretToken = req.headers.get('x-telegram-bot-api-secret-token');
@@ -37,7 +37,6 @@ export default async function handler(req: Request,res:Response) {
           });
     }
 
-  if (req.method === 'POST') {
     try {
       const body = await req.json(); 
       await bot.handleUpdate(body); 
@@ -52,11 +51,5 @@ export default async function handler(req: Request,res:Response) {
         headers: { 'Content-Type': 'application/json' },
       });
     }
-  } else {
-    console.error("Method not allowd", req.method)
-    return new Response(JSON.stringify({ message: 'Method Not Allowed' }), {
-      status: 405,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+
 }
