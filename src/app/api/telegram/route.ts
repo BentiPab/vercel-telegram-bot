@@ -1,9 +1,11 @@
 import bot from '@/bot';
+import { NextRequest } from 'next/server';
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
-export async function POST(req: Request,{ params }: { params: Promise<{ bot_token: string }> },) {
+export async function POST(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams
 
-    const telegramSecretToken = (await params).bot_token;;
+    const telegramSecretToken = searchParams.get('bot_token')
     if (telegramSecretToken !== TELEGRAM_BOT_TOKEN) {
         return new Response(JSON.stringify({ message: 'Forbidden' }), {
             status: 403,
@@ -11,11 +13,10 @@ export async function POST(req: Request,{ params }: { params: Promise<{ bot_toke
           });
     }
 
-    console.log(req.headers)
 
     try {
       const body = await req.json(); 
-      console.log(body)
+
       await bot.handleUpdate(body); 
       return new Response(JSON.stringify({ message: 'OK' }), {
         status: 200,
