@@ -14,6 +14,7 @@ export async function POST(req: Request) {
 
     try {
       const body = await req.json(); 
+      console.log(body)
       await bot.handleUpdate(body); 
       return new Response(JSON.stringify({ message: 'OK' }), {
         status: 200,
