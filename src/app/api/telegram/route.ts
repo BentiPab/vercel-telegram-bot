@@ -1,16 +1,18 @@
 import bot from '@/bot';
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+//const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
 
 export async function POST(req: Request) {
 
-    const telegramSecretToken = req.headers.get('x-telegram-bot-api-secret-token');
-    if (telegramSecretToken !== TELEGRAM_BOT_TOKEN) {
-        return new Response(JSON.stringify({ message: 'Forbidden' }), {
-            status: 403,
-            headers: { 'Content-Type': 'application/json' },
-          });
-    }
+    // const telegramSecretToken = req.headers.get('x-telegram-bot-api-secret-token');
+    // if (telegramSecretToken !== TELEGRAM_BOT_TOKEN) {
+    //     return new Response(JSON.stringify({ message: 'Forbidden' }), {
+    //         status: 403,
+    //         headers: { 'Content-Type': 'application/json' },
+    //       });
+    // }
+
+    console.log(req.headers)
 
     try {
       const body = await req.json(); 
